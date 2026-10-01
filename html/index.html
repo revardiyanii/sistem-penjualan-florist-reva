@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bouquet by Reva</title>
+<meta name="theme-color" content="#fde6d2">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="icon" type="image/svg+xml" href="../assets/flower-mark.svg">
+</head>
+<body>
+<section id="login"><form id="fL" class="card login-card" onsubmit="return false"><img class="bloom" src="../assets/flower-mark.svg" alt="">
+<h1>Bouquet by Reva</h1><p class="tagline">Made for Your Moments.</p><p class="muted">Silakan login untuk melanjutkan.</p>
+<input name="email" type="email" placeholder="Email" required autocomplete="username">
+<input name="password" type="password" placeholder="Kata sandi" required autocomplete="current-password">
+<button class="btn">Masuk</button></form></section>
+<div id="app" hidden>
+<header><button id="logout" class="logout-btn">Keluar</button>
+<h1><img class="brand-mark" src="../assets/flower-mark.svg" alt="">Bouquet by Reva</h1><p>Sistem Penjualan</p>
+<div class="who"><span class="user-meta"><span id="who"></span><span id="todayDate" class="today-date" aria-live="polite"></span></span></div></header>
+<nav>
+  <button class="on" data-v="vG">🏠 Beranda Utama</button>
+  <button data-v="vS">🛍️ Penjualan</button>
+  <button data-v="vP">💐 Produk</button>
+  <button data-v="vC">🌷 Pelanggan</button>
+</nav>
+<main>
+  <section id="vS" hidden>
+    <div class="card"><h2 id="sTitle">Transaksi Baru</h2>
+      <div class="row"><select id="sCust" title="Pelanggan"></select>
+        <select id="sPay" title="Metode pembayaran"><option value="" disabled selected>Pilih metode bayar</option><option value="QRIS">QRIS</option><option value="Transfer">Transfer</option></select>
+        <select id="sStat" title="Status pembayaran"><option value="" disabled selected>Pilih status bayar</option><option value="Lunas">Lunas</option><option value="DP">DP</option></select></div>
+      <div class="row"><select id="sProd"></select><input id="sQty" type="number" min="1" value="1">
+        <button id="addCart" class="btn">Tambah</button></div>
+      <div class="scroll"><table id="cartTable"><thead><tr><th>Nama Produk</th><th>Kuantitas</th><th>Harga</th><th>Subtotal</th><th></th></tr></thead><tbody id="cart"></tbody></table></div>
+      <div class="row end"><strong>Total: <span id="total">Rp 0</span></strong><span><button id="cancelEdit" class="btn ghost" hidden>Batal Ubah</button> <button id="checkout" class="btn">Simpan Transaksi</button></span></div>
+    </div>
+    <div class="card"><h2>Riwayat Penjualan</h2><div class="scroll"><table>
+      <thead><tr><th>No.</th><th>Tanggal</th><th>Pelanggan</th><th>Nama Produk</th><th>Jumlah</th><th>Metode Bayar</th><th>Total</th><th>Status Bayar</th><th></th></tr></thead><tbody id="tS"></tbody></table></div></div>
+  </section>
+  <section id="vP" hidden>
+    <div class="card"><h2>Produk</h2>
+      <form id="fP" class="row"><input type="hidden" name="rid">
+        <input name="name" placeholder="Nama produk" required>
+        <input name="price" type="number" min="0" placeholder="Harga" required><input name="stock" type="number" min="0" placeholder="Stok" required>
+        <button class="btn">Simpan</button></form></div>
+    <div class="card scroll"><table><thead><tr><th>Nama</th><th>Harga</th><th>Stok</th><th></th></tr></thead><tbody id="tP"></tbody></table></div>
+  </section>
+  <section id="vC" hidden>
+    <div class="card"><h2>Pelanggan</h2>
+      <form id="fC" class="row"><input type="hidden" name="rid">
+        <input name="name" placeholder="Nama" required><input name="phone" placeholder="No. HP"><input name="address" placeholder="Alamat">
+        <button class="btn">Simpan</button></form></div>
+    <div class="card scroll"><table><thead><tr><th>Nama</th><th>No. HP</th><th>Alamat</th><th></th></tr></thead><tbody id="tC"></tbody></table></div>
+  </section>
+  <section id="vG">
+    <div class="card hero">
+      <small class="eyebrow">Sistem Penjualan</small>
+      <h2>Beranda Utama</h2>
+      <p class="muted">Pantau penjualan dan kelola transaksi dengan mudah.</p>
+      <button id="goSale" class="btn">Buat Transaksi Penjualan</button>
+    </div>
+    <div class="card"><div class="row"><h2>Rekap &amp; Grafik Penjualan</h2>
+      <select id="gMode" style="max-width:130px"><option value="d">Harian</option><option value="m">Bulanan</option></select>
+      <input id="gMonth" type="month" style="max-width:170px"><input id="gYear" type="number" min="2020" max="2100" style="max-width:130px" hidden></div>
+      <div id="gSum"></div><div id="gBars"></div></div>
+    <div class="card"><h2>Produk Terlaris</h2><ul id="gTop"></ul></div>
+  </section>
+</main>
+<footer>Dibuat dengan ♡ untuk Bouquet by Reva</footer>
+</div>
+<div id="toast"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../../backend/config.js"></script>
+<script src="../../backend/app.js"></script>
+<script src="../js/script.js"></script>
+</body>
+</html>
