@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <defs>
+    <linearGradient id="petal" x1="36" y1="15" x2="66" y2="73" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff0f2"/>
+      <stop offset=".55" stop-color="#f3a8bb"/>
+      <stop offset="1" stop-color="#d86e83"/>
+    </linearGradient>
+    <linearGradient id="center" x1="43" y1="39" x2="58" y2="59" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff1b4"/>
+      <stop offset="1" stop-color="#e6a64f"/>
+    </linearGradient>
+    <filter id="shadow" x="8" y="8" width="84" height="84" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+      <feGaussianBlur stdDeviation="2.5"/>
+    </filter>
+    <path id="petalShape" d="M0 5c-7-8-16-17-15-27 1-10 12-15 19-7 8 9 5 22-4 34Z"/>
+    <path id="shine" d="M-2-3c-5-7-8-14-5-22"/>
+  </defs>
+  <circle cx="50" cy="51" r="34" fill="#9c4b5b" opacity=".12" filter="url(#shadow)"/>
+  <g transform="translate(50 49)" stroke="#c9657a" stroke-linejoin="round" stroke-width="1.5">
+    <use href="#petalShape" fill="url(#petal)"/>
+    <use href="#petalShape" fill="url(#petal)" transform="rotate(72)"/>
+    <use href="#petalShape" fill="url(#petal)" transform="rotate(144)"/>
+    <use href="#petalShape" fill="url(#petal)" transform="rotate(216)"/>
+    <use href="#petalShape" fill="url(#petal)" transform="rotate(288)"/>
+  </g>
+  <g transform="translate(50 49)" fill="none" stroke="#fff7f5" stroke-linecap="round" stroke-opacity=".75" stroke-width="1.7">
+    <use href="#shine"/>
+    <use href="#shine" transform="rotate(72)"/>
+    <use href="#shine" transform="rotate(144)"/>
+    <use href="#shine" transform="rotate(216)"/>
+    <use href="#shine" transform="rotate(288)"/>
+  </g>
+  <circle cx="50" cy="49" r="9" fill="url(#center)" stroke="#d69648" stroke-width="1.5"/>
+  <circle cx="50" cy="49" r="3" fill="#d58b45"/>
+</svg>
