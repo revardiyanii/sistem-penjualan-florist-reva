@@ -1,4 +1,5 @@
 # Sistem Penjualan Bouquet by Reva
+Demo web apps: https://revardiyanii.github.io/sistem-penjualan-florist-reva/
 
 Aplikasi web sederhana untuk membantu toko Bouquet by Reva mengelola katalog buket, pelanggan, dan transaksi penjualan. Antarmuka menggunakan HTML, CSS, dan JavaScript. Data, autentikasi, serta fungsi transaksi tersimpan dan dijalankan melalui Supabase dengan PostgreSQL.
 
