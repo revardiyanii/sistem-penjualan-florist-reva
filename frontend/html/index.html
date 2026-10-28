@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bouquet by Reva</title>
+<title>Bouquet by Reva | Sistem Penjualan</title>
 <meta name="theme-color" content="#fde6d2">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -17,60 +17,185 @@
 <button class="btn">Masuk</button></form></section>
 <div id="app" hidden>
 <header><button id="logout" class="logout-btn">Keluar</button>
-<h1><img class="brand-mark" src="../assets/flower-mark.svg" alt="">Bouquet by Reva</h1><p>Sistem Penjualan</p>
+<h1><img class="brand-mark" src="../assets/flower-mark.svg" alt="">Bouquet by Reva</h1><p>SISTEM INFORMASI PENJUALAN</p>
 <div class="who"><span class="user-meta"><span id="who"></span><span id="todayDate" class="today-date" aria-live="polite"></span></span></div></header>
 <nav>
-  <button class="on" data-v="vG">🏠 Beranda Utama</button>
-  <button data-v="vS">🛍️ Penjualan</button>
-  <button data-v="vP">💐 Produk</button>
-  <button data-v="vC">🌷 Pelanggan</button>
+  <button class="on" data-v="vG">Beranda</button>
+  <button data-v="vS">Penjualan</button>
+  <button data-v="vP">Produk</button>
+  <button data-v="vC">Pelanggan</button>
 </nav>
 <main>
   <section id="vS" hidden>
-    <div class="card"><h2 id="sTitle">Transaksi Baru</h2>
-      <div class="row"><select id="sCust" title="Pelanggan"></select>
-        <select id="sPay" title="Metode pembayaran"><option value="" disabled selected>Pilih metode bayar</option><option value="QRIS">QRIS</option><option value="Transfer">Transfer</option></select>
-        <select id="sStat" title="Status pembayaran"><option value="" disabled selected>Pilih status bayar</option><option value="Lunas">Lunas</option><option value="DP">DP</option></select></div>
-      <div class="row"><select id="sProd"></select><input id="sQty" type="number" min="1" value="1">
-        <button id="addCart" class="btn">Tambah</button></div>
-      <div class="scroll"><table id="cartTable"><thead><tr><th>Nama Produk</th><th>Kuantitas</th><th>Harga</th><th>Subtotal</th><th></th></tr></thead><tbody id="cart"></tbody></table></div>
-      <div class="row end"><strong>Total: <span id="total">Rp 0</span></strong><span><button id="cancelEdit" class="btn ghost" hidden>Batal Ubah</button> <button id="checkout" class="btn">Simpan Transaksi</button></span></div>
+    <div class="card"><h2 id="sTitle">Buat Transaksi</h2>
+      <div class="row">
+        <div class="sale-customer-picker">
+          <label for="sCustSearch">Pilih Pelanggan</label>
+          <input id="sCustSearch" type="search" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="sCustOptions" placeholder="Ketik nama atau no. HP pelanggan" autocomplete="off">
+          <input id="sCust" type="hidden">
+          <div id="sCustOptions" class="sale-customer-options" role="listbox" hidden></div>
+        </div>
+      </div>
+      <div class="row sale-product-row">
+        <div class="sale-product-picker">
+          <label for="sProd">Pilih Produk</label>
+          <select id="sProd" title="Pilih produk"></select>
+        </div>
+        <label class="sale-quantity">Kuantitas
+          <input id="sQty" type="number" min="1" step="1" value="1" aria-label="Jumlah pembelian">
+        </label>
+      </div>
+      <div class="row sale-payment-row">
+        <label class="sale-select-field">Metode Pembayaran
+          <select id="sPay" title="Metode pembayaran"><option value="" disabled selected>Pilih metode bayar</option><option value="QRIS">QRIS</option><option value="Transfer">Transfer</option></select>
+        </label>
+        <label class="sale-select-field">Status Pembayaran
+          <select id="sPlan" title="Status pembayaran"><option value="DP 50%">DP 50%</option><option value="Lunas">Lunas</option></select>
+        </label>
+      </div>
+      <div class="sale-notes"><label for="sNotes">Catatan Pelanggan <span class="muted">(opsional)</span></label>
+        <input id="sNotes" placeholder="Permintaan khusus, warna, kartu ucapan, dll."></div>
+      <div class="sale-add-row"><button id="addCart" class="btn">Tambahkan ke Keranjang</button></div>
+      <h3 class="cart-title">Keranjang Transaksi</h3>
+      <div class="scroll"><table id="cartTable"><thead><tr><th>Nama Produk</th><th>Kuantitas</th><th>Harga</th><th>Subtotal</th></tr></thead><tbody id="cart"></tbody></table></div>
+      <div class="sale-checkout-row">
+        <strong class="sale-total">Total Transaksi <span id="total">Rp 0</span></strong>
+        <div id="saleProofField" class="sale-proof-field">
+          <label for="sProof">Upload Bukti Pembayaran Pelanggan <span class="muted">(wajib, maksimal 5 MB)</span></label>
+          <input id="sProof" type="file" accept="image/jpeg,image/png" required>
+          <small id="sProofName" class="muted">Format JPG atau PNG.</small>
+        </div>
+      </div>
+      <div class="row end sale-submit-row"><span><button id="cancelEdit" class="btn ghost" hidden>Batal Ubah</button></span><button id="checkout" class="btn">Simpan Transaksi</button></div>
     </div>
-    <div class="card"><h2>Riwayat Penjualan</h2><div class="scroll"><table>
-      <thead><tr><th>No.</th><th>Tanggal</th><th>Pelanggan</th><th>Nama Produk</th><th>Jumlah</th><th>Metode Bayar</th><th>Total</th><th>Status Bayar</th><th></th></tr></thead><tbody id="tS"></tbody></table></div></div>
+    <div class="card"><h2>Rekap Data Penjualan</h2>
+      <div class="row">
+        <input id="saleSearch" type="search" placeholder="Cari nama pelanggan">
+        <label>Dari <input id="saleFrom" type="date"></label><label>Sampai <input id="saleTo" type="date"></label>
+        <button id="filterSales" class="btn">Terapkan</button><button id="exportSales" class="btn ghost">Ekspor CSV</button>
+      </div>
+      <div class="scroll"><table>
+        <thead><tr><th>No.</th><th>Tanggal</th><th>Pelanggan</th><th>Produk</th><th>Qty</th><th>Total</th><th>Pembayaran</th><th>Sisa Tagihan</th></tr></thead><tbody id="tS"></tbody></table></div>
+      <div class="row end sale-pagination"><span id="salePageInfo" class="muted"></span><nav id="salePageNumbers" class="sale-page-numbers" aria-label="Halaman rekap penjualan"></nav></div>
+    </div>
   </section>
   <section id="vP" hidden>
-    <div class="card"><h2>Produk</h2>
+    <div class="card"><h2>Data Produk</h2>
       <form id="fP" class="row"><input type="hidden" name="rid">
-        <input name="name" placeholder="Nama produk" required>
-        <input name="price" type="number" min="0" placeholder="Harga" required><input name="stock" type="number" min="0" placeholder="Stok" required>
-        <button class="btn">Simpan</button></form></div>
-    <div class="card scroll"><table><thead><tr><th>Nama</th><th>Harga</th><th>Stok</th><th></th></tr></thead><tbody id="tP"></tbody></table></div>
+        <input name="name" placeholder="Nama Produk" aria-label="Nama Produk" required>
+        <input name="price" type="number" min="0" placeholder="Harga Satuan" aria-label="Harga Satuan" required>
+        <input name="stock" type="number" min="0" placeholder="Stok Produk" aria-label="Stok Produk" required>
+        <button class="btn">Simpan Data</button></form></div>
+    <div class="card">
+      <div class="customer-sort-toolbar">
+        <label class="customer-sort-label" for="productSort">Urutkan dari...
+          <select id="productSort">
+            <option value="name">Nama (A–Z)</option>
+            <option value="newest">Baru Ditambahkan</option>
+          </select>
+        </label>
+      </div>
+      <div class="scroll"><table><thead><tr><th>Nama Produk</th><th>Harga</th><th>Stok Produk</th><th>Tambah Stok</th></tr></thead><tbody id="tP"></tbody></table></div>
+    </div>
   </section>
   <section id="vC" hidden>
-    <div class="card"><h2>Pelanggan</h2>
+    <div class="card"><h2>Data Pelanggan</h2>
       <form id="fC" class="row"><input type="hidden" name="rid">
-        <input name="name" placeholder="Nama" required><input name="phone" placeholder="No. HP"><input name="address" placeholder="Alamat">
-        <button class="btn">Simpan</button></form></div>
-    <div class="card scroll"><table><thead><tr><th>Nama</th><th>No. HP</th><th>Alamat</th><th></th></tr></thead><tbody id="tC"></tbody></table></div>
+        <input name="name" placeholder="Nama Lengkap" aria-label="Nama Lengkap" required>
+        <input name="phone" placeholder="No. HP" aria-label="No. HP">
+        <input name="address" placeholder="Alamat" aria-label="Alamat">
+        <button class="btn">Simpan Data</button></form></div>
+    <div class="card">
+      <div class="customer-sort-toolbar">
+        <label class="customer-sort-label" for="customerSort">Urutkan dari...
+          <select id="customerSort">
+            <option value="name">Nama (A–Z)</option>
+            <option value="newest">Baru Ditambahkan</option>
+          </select>
+        </label>
+      </div>
+      <div class="scroll"><table><thead><tr><th>Nama Lengkap</th><th>No. HP</th><th>Alamat</th></tr></thead><tbody id="tC"></tbody></table></div>
+    </div>
   </section>
   <section id="vG">
     <div class="card hero">
-      <small class="eyebrow">Sistem Penjualan</small>
-      <h2>Beranda Utama</h2>
-      <p class="muted">Pantau penjualan dan kelola transaksi dengan mudah.</p>
-      <button id="goSale" class="btn">Buat Transaksi Penjualan</button>
+      <div class="hero-copy">
+        <small class="eyebrow">Bouquet by Reva</small>
+        <p class="muted">Pantau Penjualan dan Pembayaran Toko</p>
+        <button id="goSale" class="btn">Buat Transaksi Baru</button>
+      </div>
+      <img src="../assets/flower-mark.svg" alt="" class="hero-mark">
     </div>
-    <div class="card"><div class="row"><h2>Rekap &amp; Grafik Penjualan</h2>
+    <div class="card"><div class="row"><h2>Grafik Penjualan</h2>
       <select id="gMode" style="max-width:130px"><option value="d">Harian</option><option value="m">Bulanan</option></select>
       <input id="gMonth" type="month" style="max-width:170px"><input id="gYear" type="number" min="2020" max="2100" style="max-width:130px" hidden></div>
-      <div id="gSum"></div><div id="gBars"></div></div>
+      <div id="gBars"></div>
+    </div>
+    <div id="dashMetrics" class="dashboard-metrics"></div>
     <div class="card"><h2>Produk Terlaris</h2><ul id="gTop"></ul></div>
   </section>
 </main>
-<footer>Dibuat dengan ♡ untuk Bouquet by Reva</footer>
+<footer>Sistem Informasi Penjualan . Bouquet by Reva</footer>
 </div>
 <div id="toast"></div>
+<dialog id="proofDialog" class="proof-dialog">
+  <h2>Periksa Bukti Pembayaran</h2>
+  <p id="proofQuestion" hidden></p>
+  <p id="proofMeta"></p>
+  <a id="proofLink" target="_blank" rel="noopener">Buka bukti di tab baru</a>
+  <div class="row end"><button id="rejectProof" class="btn ghost">Tolak</button><button id="approveProof" class="btn">Verifikasi &amp; Catat Pembayaran</button></div>
+  <button id="closeProof" class="btn ghost">Tutup</button>
+</dialog>
+<dialog id="payoffDialog" class="proof-dialog payoff-dialog" aria-labelledby="payoffTitle">
+  <h2 id="payoffTitle">Apakah pesanan ini telah dilunasi?</h2>
+  <p>Upload Bukti Bayar Pelunasan pelanggan terlebih dahulu, lalu pilih <strong>Ya</strong> untuk mencatat pelunasan.</p>
+  <p id="payoffMeta" class="muted"></p>
+  <form id="payoffForm">
+    <label for="payoffProof">Upload Bukti Pelunasan Pelanggan</label>
+    <input id="payoffProof" type="file" accept="image/jpeg,image/png" required>
+    <small id="payoffProofName" class="muted">Format JPG/PNG, maksimal 5 MB.</small>
+    <div class="row end">
+      <button id="cancelPayoff" type="button" class="btn ghost">Batal</button>
+      <button id="confirmPayoff" type="submit" class="btn" disabled>Ya</button>
+    </div>
+  </form>
+</dialog>
+<dialog id="customerActions" class="customer-actions-dialog" aria-labelledby="customerActionsTitle">
+  <h2 id="customerActionsTitle">Data Pelanggan</h2>
+  <p id="customerActionsName" class="muted"></p>
+  <div class="customer-action-buttons">
+    <button id="editCustomer" class="btn">Ubah Data</button>
+    <button id="deleteCustomer" class="btn danger">Hapus Data</button>
+    <button id="closeCustomerActions" class="btn ghost">Batal</button>
+  </div>
+</dialog>
+<dialog id="productActions" class="customer-actions-dialog" aria-labelledby="productActionsTitle">
+  <h2 id="productActionsTitle">Data Produk</h2>
+  <p id="productActionsName" class="muted"></p>
+  <div class="customer-action-buttons">
+    <button id="editProduct" class="btn">Ubah Data</button>
+    <button id="deleteProduct" class="btn danger">Hapus Data</button>
+    <button id="closeProductActions" class="btn ghost">Batal</button>
+  </div>
+</dialog>
+<dialog id="cartItemActions" class="customer-actions-dialog" aria-labelledby="cartItemActionsTitle">
+  <h2 id="cartItemActionsTitle">Item Keranjang</h2>
+  <p id="cartItemActionsName" class="muted"></p>
+  <div id="cartItemActionButtons" class="customer-action-buttons">
+    <button id="editCartItem" class="btn">Ubah Data</button>
+    <button id="deleteCartItem" class="btn danger">Hapus Data</button>
+    <button id="closeCartItemActions" class="btn ghost">Batal</button>
+  </div>
+  <form id="cartItemEditForm" class="cart-item-edit-form" hidden>
+    <label for="cartItemQty">Kuantitas</label>
+    <input id="cartItemQty" type="number" min="1" step="1" required>
+    <small id="cartItemStock" class="muted"></small>
+    <div class="customer-action-buttons">
+      <button class="btn">Simpan Perubahan</button>
+      <button id="cancelCartItemEdit" type="button" class="btn ghost">Batal</button>
+    </div>
+  </form>
+</dialog>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../../backend/config.js"></script>
 <script src="../../backend/app.js"></script>
